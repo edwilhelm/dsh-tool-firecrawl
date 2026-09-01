@@ -2,9 +2,43 @@
 
 Model-facing `firecrawl_search` tool using the Firecrawl keyless free tier.
 
-## Usage
+## Install / Uninstall
 
-Add a row to any Cordis composition:
+Run the bundled script from the repo root. It copies the package into your DSH
+profile's `node_modules` and adds the plugin row to each profile's
+`cordis.patch.yml` (or the home patch, with `--home-patch`). No npm registry or
+external dependencies needed — it works with a local clone.
+
+```bash
+# Install into all profiles under the default DSH home (~/.dsh or $DSH_HOME)
+node install.mjs
+
+# Install into one profile only
+node install.mjs --profile web
+
+# Custom DSH home
+node install.mjs --home ~/.dsh
+
+# Use the home patch instead of per-profile patches
+node install.mjs --home-patch
+
+# Check what's installed
+node install.mjs --status
+
+# Remove the tool (package + patch rows)
+node install.mjs --uninstall
+```
+
+Options: `--home <dir>` / `-h`, `--profile <name>` / `-p` (repeatable),
+`--home-patch` / `-H`, `--status` / `-s`, `--uninstall` / `-u`, `--help` / `-?`.
+
+> The profile patch layer is hot-reloaded by a running harness. After
+> installing, start a new session (or restart `dsh`) to see the
+> `firecrawl_search` tool. Uninstall similarly needs a restart to finalize.
+
+## Manual wiring
+
+Alternatively, add a row to any Cordis composition by hand:
 
 ```yaml
 - id: tool-firecrawl
